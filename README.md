@@ -1,2 +1,2 @@
-# EEAddonTemplate
-Addon Template for Emendatus Enigmatica API
+# EE Create Addon
+Emendatus Enigmatica Create Addon

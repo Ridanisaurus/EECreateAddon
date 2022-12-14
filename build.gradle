@@ -87,6 +87,8 @@ repositories {
     maven { url "https://dvs1.progwml6.com/files/maven" }
     // EE
     maven { url "https://maven.nanite.dev" }
+    // Local Maven
+    mavenLocal()
 }
 
 dependencies {
