@@ -21,7 +21,7 @@ def ENV = System.getenv()
 
 version = "${mod_version}-build.${ENV.GITHUB_RUN_NUMBER ?: 9999}+mc${mc_version}"
 group = 'com.ridanisaurus'
-archivesBaseName = 'EEMODAddon'
+archivesBaseName = 'EECreateAddon'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
@@ -104,7 +104,7 @@ dependencies {
 jar {
     manifest {
         attributes([
-                "Specification-Title"     : "eemodaddon",
+                "Specification-Title"     : "eecreateaddon",
                 "Specification-Vendor"    : "Ridanisaurus",
                 "Specification-Version"   : "1", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,
@@ -155,7 +155,7 @@ if (ENV.CURSE_DEPLOY) {
             addGameVersion "Java 17" // Targeting java 17
             addGameVersion "${mc_version}" // Minecraft :pog:
             mainArtifact(jar) {
-                displayName = "EEMODAddon-${mc_version}-${mod_version}"
+                displayName = "EECreateAddon-${mc_version}-${mod_version}"
                 relations {
                     optionalDependency "emendatus-enigmatica"
                 }
