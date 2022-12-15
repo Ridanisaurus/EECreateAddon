@@ -261,7 +261,7 @@ public class EECreateDataGen {
 		}
 	}
 
-	public static class Lang extends LanguageProvider {
+	public static class Lang extends EELangProvider {
 
 		private final EmendatusDataRegistry registry;
 
