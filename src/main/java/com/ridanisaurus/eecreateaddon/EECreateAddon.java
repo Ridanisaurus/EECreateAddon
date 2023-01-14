@@ -7,7 +7,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 @Mod(EECreateAddon.MOD_ID)
 public class EECreateAddon
 {
-    public static final String MOD_ID = "eecreateaddon";
+    public static final String MOD_ID = "ee_create_addon";
     public static final String CREATE = "create";
 
     public EECreateAddon()

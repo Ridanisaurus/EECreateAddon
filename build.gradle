@@ -21,7 +21,7 @@ def ENV = System.getenv()
 
 version = "${mod_version}-build.${ENV.GITHUB_RUN_NUMBER ?: 9999}+mc${mc_version}"
 group = 'com.ridanisaurus'
-archivesBaseName = 'EECreateAddon'
+archivesBaseName = 'EE_Create_Addon'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
@@ -110,7 +110,7 @@ dependencies {
 jar {
     manifest {
         attributes([
-                "Specification-Title"     : "eecreateaddon",
+                "Specification-Title"     : "ee_create_addon",
                 "Specification-Vendor"    : "Ridanisaurus",
                 "Specification-Version"   : "1", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,
@@ -163,7 +163,8 @@ if (ENV.CURSE_DEPLOY) {
             mainArtifact(jar) {
                 displayName = "EECreateAddon-${mc_version}-${mod_version}"
                 relations {
-                    optionalDependency "emendatus-enigmatica"
+                    requiredDependency "emendatus-enigmatica"
+                    requiredDependency "create"
                 }
             }
             changelog = file("changelog.md") // pull the contents of the changelog.md
