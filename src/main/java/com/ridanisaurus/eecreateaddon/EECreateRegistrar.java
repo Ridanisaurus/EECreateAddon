@@ -21,22 +21,9 @@ public class EECreateRegistrar {
 	public static void registerCrushedOres(MaterialModel material) {
 		String itemName = "crushed_" + material.getId() + "_ore";
 		if (material.getProperties().isBurnable()) {
-			crushedOreMap.put(material.getId(), ITEMS.register(itemName, () -> new BasicBurnableItem(
-					material.getProperties().getBurnTime(),
-					material.getColors().getHighlightColor(3),
-					material.getColors().getHighlightColor(1),
-					material.getColors().getMaterialColor(),
-					material.getColors().getShadowColor(1),
-					material.getColors().getShadowColor(2)
-			)));
+			crushedOreMap.put(material.getId(), ITEMS.register(itemName, () -> new BasicBurnableItem(material, material.getProperties().getBurnTime())));
 		} else {
-			crushedOreMap.put(material.getId(), ITEMS.register(itemName, () -> new BasicItem(
-					material.getColors().getHighlightColor(3),
-					material.getColors().getHighlightColor(1),
-					material.getColors().getMaterialColor(),
-					material.getColors().getShadowColor(1),
-					material.getColors().getShadowColor(2)
-			)));
+			crushedOreMap.put(material.getId(), ITEMS.register(itemName, () -> new BasicItem(material)));
 		}
 	}
 
