@@ -12,6 +12,7 @@ buildscript {
 
 plugins {
     id 'maven-publish'
+    id "com.matthewprenger.cursegradle" version "1.4.0"
 }
 
 apply plugin: 'net.minecraftforge.gradle'
@@ -34,7 +35,7 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
-            property 'forge.enabledGameTestNamespaces', 'examplemod'
+            property 'forge.enabledGameTestNamespaces', 'ee_create_addon'
             mods {
                 examplemod {
                     source sourceSets.main
@@ -46,7 +47,7 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
-            property 'forge.enabledGameTestNamespaces', 'examplemod'
+            property 'forge.enabledGameTestNamespaces', 'ee_create_addon'
             mods {
                 examplemod {
                     source sourceSets.main
@@ -58,7 +59,7 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
-            property 'forge.enabledGameTestNamespaces', 'examplemod'
+            property 'forge.enabledGameTestNamespaces', 'ee_create_addon'
             mods {
                 examplemod {
                     source sourceSets.main
@@ -70,7 +71,7 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
-            args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            args '--mod', 'ee_create_addon', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
             mods {
                 examplemod {
                     source sourceSets.main
@@ -86,9 +87,9 @@ repositories {
     // JEI
     maven { url "https://dvs1.progwml6.com/files/maven" }
     // EE
-    maven { url "https://maven.nanite.dev" }
+    maven { url "https://maven.saps.dev/releases/" }
     // Local Maven
-    mavenLocal()
+//    mavenLocal()
     // Curse Forge
     maven { url "https://www.cursemaven.com" }
 }
@@ -97,12 +98,6 @@ dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
 
     implementation fg.deobf("com.ridanisaurus:emendatusenigmatica:${ee_version}+mc${mc_version}")
-
-    // compile against the JEI API but do not include it at runtime
-    compileOnly(fg.deobf("mezz.jei:jei-${mc_version}-common-api:${jei_version}"))
-    compileOnly(fg.deobf("mezz.jei:jei-${mc_version}-forge-api:${jei_version}"))
-    // at runtime, use the full JEI jar for Forge
-    runtimeOnly(fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}"))
 
     runtimeOnly fg.deobf("curse.maven:create-328085:${create_version}")
 }
@@ -145,8 +140,14 @@ publishing {
         }
     }
     repositories {
-        maven {
-            url "file://${project.projectDir}/mcmodsrepo"
+        if (ENV.SAPS_DEPLOY) {
+            maven {
+                url "https://maven.saps.dev/releases/"
+                credentials {
+                    username = "rid"
+                    password = "${ENV.SAPS_DEPLOY}"
+                }
+            }
         }
     }
 }
