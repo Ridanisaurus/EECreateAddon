@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Emendatus Enigmatica 
+    url: https://github.com/Ridanisaurus/EmendatusEnigmatica/issues
+    about: Redirects you to creating an issue on the Emendatus Enigmatica issue tracker.
