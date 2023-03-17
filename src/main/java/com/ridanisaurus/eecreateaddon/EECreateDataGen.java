@@ -253,7 +253,7 @@ public class EECreateDataGen {
 					new TagBuilder().tag(crushedOre.toString()).save(consumer, new ResourceLocation(EECreateAddon.CREATE, "/items/crushed_ores/" + material.getId()));
 				}
 			}
-			new TagBuilder().tags(createCrushedOres).save(consumer, new ResourceLocation(EECreateAddon.CREATE, "/items/crushed_ores"));
+			if (!createCrushedOres.isEmpty()) new TagBuilder().tags(createCrushedOres).save(consumer, new ResourceLocation(EECreateAddon.CREATE, "/items/crushed_ores"));
 		}
 		@Override
 		public String getName() {
