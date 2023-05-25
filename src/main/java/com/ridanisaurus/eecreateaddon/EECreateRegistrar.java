@@ -19,7 +19,7 @@ public class EECreateRegistrar {
 	public static Map<String, RegistryObject<Item>> crushedOreMap = new HashMap<>();
 
 	public static void registerCrushedOres(MaterialModel material) {
-		String itemName = "crushed_" + material.getId() + "_ore";
+		String itemName = "crushed_raw_" + material.getId();
 		if (material.getProperties().isBurnable()) {
 			crushedOreMap.put(material.getId(), ITEMS.register(itemName, () -> new BasicBurnableItem(material, material.getProperties().getBurnTime())));
 		} else {

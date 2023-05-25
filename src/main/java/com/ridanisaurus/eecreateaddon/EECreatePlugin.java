@@ -19,7 +19,7 @@ public class EECreatePlugin implements IEmendatusPlugin {
 	@Override
 	public void registerMinecraft(List<MaterialModel> materialModels, List<StrataModel> strataModels) {
 		for (MaterialModel material : materialModels) {
-			if (material.getProcessedTypes().contains("crushed_ore")) {
+			if (material.getProcessedTypes().contains("crushed_raw")) {
                 EECreateRegistrar.registerCrushedOres(material);
             }
 		}

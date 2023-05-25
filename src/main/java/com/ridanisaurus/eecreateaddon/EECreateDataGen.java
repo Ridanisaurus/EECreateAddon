@@ -61,17 +61,17 @@ public class EECreateDataGen {
 		protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
 			for (MaterialModel material : registry.getMaterials()) {
 				List<String> processedType = material.getProcessedTypes();
-				if (processedType.contains("crushed_ore")) {
+				if (processedType.contains("crushed_raw")) {
 					// Ingot from Smelting Crushed Ore
 					SimpleCookingRecipeBuilder.smelting(Ingredient.of(EECreateTags.MATERIAL_CRUSHED_ORE.apply(material.getId())),
 									EERegistrar.ingotMap.get(material.getId()).get(), 0.1F, 200)
 							.unlockedBy("cobblestone", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.COBBLESTONE))
-							.save(consumer, new ResourceLocation(Reference.MOD_ID, "ingot/from_crushed_ore/smelting/" + material.getId()));
+							.save(consumer, new ResourceLocation(Reference.MOD_ID, "ingot/from_crushed_raw/smelting/" + material.getId()));
 					// Ingot from Blasting Crushed Ore
 					SimpleCookingRecipeBuilder.blasting(Ingredient.of(EECreateTags.MATERIAL_CRUSHED_ORE.apply(material.getId())),
 									EERegistrar.ingotMap.get(material.getId()).get(), 0.1F, 100)
 							.unlockedBy("cobblestone", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.COBBLESTONE))
-							.save(consumer, new ResourceLocation(Reference.MOD_ID, "ingot/from_crushed_ore/blasting/" + material.getId()));
+							.save(consumer, new ResourceLocation(Reference.MOD_ID, "ingot/from_crushed_raw/blasting/" + material.getId()));
 				}
 			}
 		}
@@ -99,7 +99,7 @@ public class EECreateDataGen {
 									for (CompatModel.CompatValuesModel value : recipe.getValues()) {
 										if (value.getType().equals("ore") && processedType.contains("ore")) {
 											// Metal Ore to Crushing Ore
-											if (processedType.contains("crushed_ore") && material.getProperties().getMaterialType().equals("metal")) {
+											if (processedType.contains("crushed_raw") && material.getProperties().getMaterialType().equals("metal")) {
 												new RecipeBuilder("results")
 														.type("create:crushing")
 														.group("emendatusenigmatica:compat_recipe")
@@ -135,7 +135,7 @@ public class EECreateDataGen {
 							}
 						}
 					}
-					if (processedType.contains("crushed_ore") && material.isModded()) {
+					if (processedType.contains("crushed_raw") && material.isModded()) {
 						if (processedType.contains("raw")) {
 							// Raw Material to Crushed Ore
 							new RecipeBuilder("results")
@@ -168,7 +168,7 @@ public class EECreateDataGen {
 								if (recipe.getMod().equals("create") && recipe.getMachine().equals("fan_washing")) {
 									for (CompatModel.CompatValuesModel value : recipe.getValues()) {
 										// Crushed Ore to Nugget
-										if (value.getType().equals("crushed_ore") && processedType.contains("crushed_ore") && processedType.contains("nugget")) {
+										if (value.getType().equals("crushed_raw") && processedType.contains("crushed_raw") && processedType.contains("nugget")) {
 											new RecipeBuilder("results")
 													.type("create:splashing")
 													.group("emendatusenigmatica:compat_recipe")
@@ -209,18 +209,18 @@ public class EECreateDataGen {
 			for (MaterialModel material : registry.getMaterials()) {
 				List<String> processedType = material.getProcessedTypes();
 				// Crushed Ore
-				if (processedType.contains("crushed_ore")) {
+				if (processedType.contains("crushed_raw")) {
 					ItemModelBuilder crushedBuilder = new ItemModelBuilder("minecraft:item/generated");
 					if (material.getColors().getMaterialColor() == -1) {
 						crushedBuilder.texture("layer0", new ResourceLocation(Reference.MOD_ID, "items/" + material.getId() + "_crushed").toString());
 					} else {
-						crushedBuilder.texture("layer0", new ResourceLocation(Reference.MOD_ID, "items/templates/crushed_ore/00").toString())
-								.texture("layer1", new ResourceLocation(Reference.MOD_ID, "items/templates/crushed_ore/01").toString())
-								.texture("layer2", new ResourceLocation(Reference.MOD_ID, "items/templates/crushed_ore/02").toString())
-								.texture("layer3", new ResourceLocation(Reference.MOD_ID, "items/templates/crushed_ore/03").toString())
-								.texture("layer4", new ResourceLocation(Reference.MOD_ID, "items/templates/crushed_ore/04").toString());
+						crushedBuilder.texture("layer0", new ResourceLocation(Reference.MOD_ID, "items/templates/crushed_raw/00").toString())
+								.texture("layer1", new ResourceLocation(Reference.MOD_ID, "items/templates/crushed_raw/01").toString())
+								.texture("layer2", new ResourceLocation(Reference.MOD_ID, "items/templates/crushed_raw/02").toString())
+								.texture("layer3", new ResourceLocation(Reference.MOD_ID, "items/templates/crushed_raw/03").toString())
+								.texture("layer4", new ResourceLocation(Reference.MOD_ID, "items/templates/crushed_raw/04").toString());
 					}
-					crushedBuilder.save(consumer, new ResourceLocation(Reference.MOD_ID, "crushed_" + material.getId() + "_ore"));
+					crushedBuilder.save(consumer, new ResourceLocation(Reference.MOD_ID, "crushed_raw_" + material.getId()));
 				}
 			}
 		}
@@ -247,13 +247,13 @@ public class EECreateDataGen {
 			for (MaterialModel material : registry.getMaterials()) {
 				List<String> processedType = material.getProcessedTypes();
 				// Crushed Ores
-				if (processedType.contains("crushed_ore")) {
+				if (processedType.contains("crushed_raw")) {
 					ResourceLocation crushedOre = EECreateRegistrar.crushedOreMap.get(material.getId()).getId();
-					if (!createCrushedOres.contains("#create:crushed_ores/" + material.getId())) createCrushedOres.add("#create:crushed_ores/" + material.getId());
-					new TagBuilder().tag(crushedOre.toString()).save(consumer, new ResourceLocation(EECreateAddon.CREATE, "/items/crushed_ores/" + material.getId()));
+					if (!createCrushedOres.contains("#create:crushed_raw/" + material.getId())) createCrushedOres.add("#create:crushed_raw/" + material.getId());
+					new TagBuilder().tag(crushedOre.toString()).save(consumer, new ResourceLocation(EECreateAddon.CREATE, "/items/crushed_raw/" + material.getId()));
 				}
 			}
-			if (!createCrushedOres.isEmpty()) new TagBuilder().tags(createCrushedOres).save(consumer, new ResourceLocation(EECreateAddon.CREATE, "/items/crushed_ores"));
+			if (!createCrushedOres.isEmpty()) new TagBuilder().tags(createCrushedOres).save(consumer, new ResourceLocation(EECreateAddon.CREATE, "/items/crushed_raw"));
 		}
 		@Override
 		public String getName() {
@@ -275,7 +275,7 @@ public class EECreateDataGen {
 			for (MaterialModel material : registry.getMaterials()) {
 				List<String> processedType = material.getProcessedTypes();
 				// Crushed Ore
-				if (processedType.contains("crushed_ore")) {
+				if (processedType.contains("crushed_raw")) {
 					StringBuilder sb = new StringBuilder();
 					sb.append("Crushed ");
 					sb.append(material.getLocalizedName());
