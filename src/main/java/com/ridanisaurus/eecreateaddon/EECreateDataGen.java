@@ -61,7 +61,7 @@ public class EECreateDataGen {
 		protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
 			for (MaterialModel material : registry.getMaterials()) {
 				List<String> processedType = material.getProcessedTypes();
-				if (processedType.contains("crushed_ore")) {
+				if (processedType.contains("crushed_ore") && processedType.contains("ingot")) {
 					// Ingot from Smelting Crushed Ore
 					SimpleCookingRecipeBuilder.smelting(Ingredient.of(EECreateTags.MATERIAL_CRUSHED_ORE.apply(material.getId())),
 									EERegistrar.ingotMap.get(material.getId()).get(), 0.1F, 200)
@@ -135,31 +135,29 @@ public class EECreateDataGen {
 							}
 						}
 					}
-					if (processedType.contains("crushed_ore") && material.isModded()) {
-						if (processedType.contains("raw")) {
-							// Raw Material to Crushed Ore
-							new RecipeBuilder("results")
-									.type("create:crushing")
-									.group("emendatusenigmatica:compat_recipe")
-									.fieldJson("ingredients", new RecipeBuilder.JsonItemBuilder(true)
-											.stack(EERegistrar.rawMap.get(material.getId()).get()))
-									.fieldInt("processingTime", 400)
-									.addOutput(builder -> builder
-											.stackWithCount(EECreateRegistrar.crushedOreMap.get(material.getId()).get(), 1)
-											.stackWithChance(ForgeRegistries.ITEMS.getValue(new ResourceLocation(EECreateAddon.CREATE, "experience_nugget")), 1, 0.75))
-									.save(consumer, new ResourceLocation(Reference.MOD_ID, "crushed/from_raw_crushing/" + material.getId()));
-							// Raw Block to Crushed Ore
-							new RecipeBuilder("results")
-									.type("create:crushing")
-									.group("emendatusenigmatica:compat_recipe")
-									.fieldJson("ingredients", new RecipeBuilder.JsonItemBuilder(true)
-											.stack(EERegistrar.rawBlockItemMap.get(material.getId()).get()))
-									.fieldInt("processingTime", 400)
-									.addOutput(builder -> builder
-											.stackWithCount(EECreateRegistrar.crushedOreMap.get(material.getId()).get(), 9)
-											.stackWithChance(ForgeRegistries.ITEMS.getValue(new ResourceLocation(EECreateAddon.CREATE, "experience_nugget")), 9, 0.75))
-									.save(consumer, new ResourceLocation(Reference.MOD_ID, "crushed/from_raw_block_crushing/" + material.getId()));
-						}
+					if (processedType.contains("crushed_ore") && material.isModded() && processedType.contains("raw")) {
+						// Raw Material to Crushed Ore
+						new RecipeBuilder("results")
+								.type("create:crushing")
+								.group("emendatusenigmatica:compat_recipe")
+								.fieldJson("ingredients", new RecipeBuilder.JsonItemBuilder(true)
+										.stack(EERegistrar.rawMap.get(material.getId()).get()))
+								.fieldInt("processingTime", 400)
+								.addOutput(builder -> builder
+										.stackWithCount(EECreateRegistrar.crushedOreMap.get(material.getId()).get(), 1)
+										.stackWithChance(ForgeRegistries.ITEMS.getValue(new ResourceLocation(EECreateAddon.CREATE, "experience_nugget")), 1, 0.75))
+								.save(consumer, new ResourceLocation(Reference.MOD_ID, "crushed/from_raw_crushing/" + material.getId()));
+						// Raw Block to Crushed Ore
+						new RecipeBuilder("results")
+								.type("create:crushing")
+								.group("emendatusenigmatica:compat_recipe")
+								.fieldJson("ingredients", new RecipeBuilder.JsonItemBuilder(true)
+										.stack(EERegistrar.rawBlockItemMap.get(material.getId()).get()))
+								.fieldInt("processingTime", 400)
+								.addOutput(builder -> builder
+										.stackWithCount(EECreateRegistrar.crushedOreMap.get(material.getId()).get(), 9)
+										.stackWithChance(ForgeRegistries.ITEMS.getValue(new ResourceLocation(EECreateAddon.CREATE, "experience_nugget")), 9, 0.75))
+								.save(consumer, new ResourceLocation(Reference.MOD_ID, "crushed/from_raw_block_crushing/" + material.getId()));
 					}
 					// SPLASHING
 					for (CompatModel compat : registry.getCompat()) {
